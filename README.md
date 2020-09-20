@@ -20,21 +20,21 @@ It steals outlook mails, attachments, oneDrive files, OneNote notes and injects 
 
 Before setting up the tool let&#39;s first register an application in Azure Active Directory.
 
-**Create App registration**
+## **Create App registration**
 
 Registering your application establishes a trust relationship between your app and the Microsoft identity platform.
 
 1. Register an app in azure active directory and enable **access\_token** and **token\_id** in authentication.
 
-![](RackMultipart20200920-4-1sr9wfj_html_a92ef5526ec08134.png)
+<img src="https://i.ibb.co/XVDzgFq/1.png" alt="1" border="0">
 
-![](RackMultipart20200920-4-1sr9wfj_html_55d23867a11d7194.png)
+<img src="https://i.ibb.co/mvSbfXS/2.png" alt="2" border="0">
 
-1. Copy the **clientId** from overview tab and replace it with **$client\_id value** in **index.php** also the $redirect\_uri if its not the same as yours
+2. Copy the **clientId** from overview tab and replace it with **$client\_id value** in **index.php** also the $redirect\_uri if its not the same as yours
 
-![](RackMultipart20200920-4-1sr9wfj_html_dd5f3fe655e67063.png)
+<img src="https://i.ibb.co/Q86FSXY/3.png" alt="3" border="0" width="500px">
 
-**Now will see how to set up this tool:**
+## **Now will see how to set up this tool:**
 
 1. Make sure to run this tool in a Windows machine that has Microsoft Word installed.
 2. We will need to install [python3](https://www.python.org/downloads/) and [xmapp](https://www.apachefriends.org/index.html) server. (We can use any other web server that can help us to host php files)
@@ -42,14 +42,15 @@ Registering your application establishes a trust relationship between your app a
 4. Run the following command in cmd **pip install requests crayons**
 5. Open **index.php** and replace the **client\_id** and **redirect\_uri** with the one that we setup while registering our application on azure. Then we are ready to use the tool.
 
-Start the apache server from xampp and visit [http://localhost/](http://localhost/)
+<img src="https://i.ibb.co/qW4QKKX/4.png" alt="4" border="0" width="400px">
 
-![](RackMultipart20200920-4-1sr9wfj_html_8745ee8c36e06d82.png)
+Start the apache server from xampp and visit [http://localhost/](http://localhost/)
 
 Note - This application can also be hosted on the cloud infrastructure.
 
-![](RackMultipart20200920-4-1sr9wfj_html_9adbabcebb2930ba.png)
+<img src="https://i.ibb.co/7Vj54c5/5.png" alt="5" border="0">
 
+<img src="https://i.ibb.co/0fMjDb5/6.png" alt="6" border="0">
 This is just a simple page we can further edit as per our needs.
 
 As soon as a user clicks on the **Read more** button or any link and accepts the requested permissions, for now it will be redirected back to **http://localhost** but the same can be modified.
@@ -58,10 +59,11 @@ In the background our **365-Stealer** will be stealing all emails, attachments, 
 
 Visit [http://localhost/yourVictims/](http://localhost/yourVictims/) to see all the users who got hacked also you can find an access\_token.txt file that contains the user&#39;s access token that will be valid for 1 hour. Access tokens are the thing that applications use to make API requests on behalf of a user. The access token represents the authorization of a specific application to access specific parts of a user&#39;s data.
 
-![](RackMultipart20200920-4-1sr9wfj_html_fee98a403acc3956.png)
 
-![](RackMultipart20200920-4-1sr9wfj_html_ef51e3f2d9293965.png)
 
+<img src="https://i.ibb.co/6FCXKqT/7.png" alt="7" border="0">
+
+<img src="https://i.ibb.co/FBpfpwj/8.png" alt="8" border="0">
 To understand the features of this tool lets use it in the command line.
 
 Firstly we need to grab that access token and run the following command.
@@ -70,33 +72,31 @@ Firstly we need to grab that access token and run the following command.
 
 This will run like the following
 
-![](RackMultipart20200920-4-1sr9wfj_html_8cc03538fa7afd0f.png)
+<img src="https://i.ibb.co/KF9xjSd/9.png" alt="9" border="0">
 
-**Features**
+
+## **Features**
 
 Note: All configuration is done in **365-Stealer.py** itself
 
 1. We need to provide extensions that we want to download from onedrive and outlook, and keywords that we want to search in the mails like &#39;password&#39; and also the macros location which you want to inject in the doc file.
 
+<img src="https://i.ibb.co/1MFMCJp/10.png" alt="10" border="0" width="600px">
 
-![](RackMultipart20200920-4-1sr9wfj_html_8d54f0692cb2d73a.png)
+2. Tool is also capable of sending email from the particular victim id, we need to edit fromUser field as shown in the above screenshot. To create mails we need to edit the **mail** variable which is in json form as shown below in the screenshot.
 
-1. Tool is also capable of sending email from the particular victim id, we need to edit fromUser field as shown in the above screenshot.
-
-To create mails we need to edit the **mail** variable which is in json form as shown below in the screenshot.
-
-![](RackMultipart20200920-4-1sr9wfj_html_f4aa8fa5b4168792.png)
-
-1. We can create outlook rules by editing rules variable
-
-![](RackMultipart20200920-4-1sr9wfj_html_e4b2ed1395d7328b.png)
-
-1. Comment out any feature that we don&#39;t want to use
+<img src="https://i.ibb.co/pzh3mkw/11.png" alt="11" border="0" width="600px">
 
 
-![](RackMultipart20200920-4-1sr9wfj_html_474174c78616a963.png)
+3. We can create outlook rules by editing rules variable
 
-Thanks for reading the post.
+<img src="https://i.ibb.co/pzh3mkw/12.png" alt="11" border="0">
+
+4. Comment out any feature that we don&#39;t want to use
+
+<img src="https://i.ibb.co/s1wBYhh/13.png" alt="13" border="0">
+
+
 
 Posted by:
 
