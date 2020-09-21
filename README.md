@@ -1,6 +1,6 @@
 # **365-Stealer**
 
-I have been currently working on Azure and Office365 to explore and learn various techniques to abuse its features. In this blog we will see how azure app registration feature can be leveraged to phish users in the same tenant and steal their access token which will allow us to do malicious activity.
+I have been currently working on Azure and Office365 to explore and learn various techniques to abuse its features. In this blog we will see how Azure app registration feature can be leveraged to phish users in the same tenant and steal their access token which will allow us to do malicious activity.
 
 Before introducing my tool, I would like to thank [0x09AL](https://twitter.com/0x09AL) for writing [office365-attack-toolkit](https://github.com/mdsecactivebreach/o365-attack-toolkit) .
 
@@ -24,7 +24,7 @@ Before setting up the tool let&#39;s first register an application in Azure Acti
 
 Registering your application establishes a trust relationship between your app and the Microsoft identity platform.
 
-1. Register an app in azure active directory and enable **access\_token** and **token\_id** in authentication.
+1. Register an app in Azure active directory and enable **access\_token** and **token\_id** in authentication.
 
 <img src="https://i.ibb.co/Tm48XS8/ss.png" alt="ss" border="0">
 
@@ -40,7 +40,7 @@ Registering your application establishes a trust relationship between your app a
 2. We will need to install [python3](https://www.python.org/downloads/) and [xmapp](https://www.apachefriends.org/index.html) server. (We can use any other web server that can help us to host php files)
 3. Move all the files of the tool to its resources to **C:\xampp\htdocs** directory. ![](RackMultipart20200920-4-1sr9wfj_html_ae36021f8825f717.png)
 4. Run the following command in cmd **pip install requests crayons**
-5. Open **index.php** and replace the **client\_id** and **redirect\_uri** with the one that we setup while registering our application on azure. Then we are ready to use the tool.
+5. Open **index.php** and replace the **client\_id** and **redirect\_uri** with the one that we setup while registering our application on Azure. Then we are ready to use the tool.
 
 <img src="https://i.ibb.co/qW4QKKX/4.png" alt="4" border="0" width="400px">
 
