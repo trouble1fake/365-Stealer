@@ -26,7 +26,7 @@ Registering your application establishes a trust relationship between your app a
 
 1. Register an app in azure active directory and enable **access\_token** and **token\_id** in authentication.
 
-<img src="https://i.ibb.co/XVDzgFq/1.png" alt="1" border="0">
+<img src="https://i.ibb.co/Tm48XS8/ss.png" alt="ss" border="0">
 
 <img src="https://i.ibb.co/mvSbfXS/2.png" alt="2" border="0">
 
