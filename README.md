@@ -90,7 +90,7 @@ Note: All configuration is done in **365-Stealer.py** itself
 
 3. We can create outlook rules by editing rules variable
 
-<img src="https://i.ibb.co/pzh3mkw/12.png" alt="11" border="0">
+<img src="https://i.ibb.co/P6G0vRM/12.png" alt="11" border="0">
 
 4. Comment out any feature that we don&#39;t want to use
 
