@@ -1,7 +1,7 @@
 <?php
 
 // Following varaibles need to edited
-$client_id = "b3e08001-5672-447b-a0e0-509d4ac7ef83";
+$client_id = "f813e35c-068a-47c0-8c0e-3219a91b4fc1";
 $redirect_uri = "http://localhost/";
 
 if(isset($_REQUEST['submit'])){
